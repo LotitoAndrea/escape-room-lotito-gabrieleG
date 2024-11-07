@@ -3,10 +3,24 @@ body
     background: black;
     height: 100vh;
     color: white;
-    
+
+    background-image: url('https://c.tenor.com/27mSeF5fDXEAAAAd/tenor.gif');
+    background-size: cover;       
+    background-position: center;  
+    background-repeat: no-repeat; 
+    height: 100vh;                
+    margin: 0;
 }
-#ciao
+#title
 {
-    font-size: 1rem;
+    font-size: 5rem;
+    text-align: center;
+    color: rgb(199, 248, 255);
+    font-family: serif;
+    font-weight: bold;
+}
+#buttonStart
+{
+    text-align: center;
     
 }
