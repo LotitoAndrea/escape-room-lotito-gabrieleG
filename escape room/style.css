@@ -1,26 +1,72 @@
-body 
-{
+body {
     background: black;
     height: 100vh;
     color: white;
-
     background-image: url('https://c.tenor.com/27mSeF5fDXEAAAAd/tenor.gif');
     background-size: cover;       
     background-position: center;  
     background-repeat: no-repeat; 
-    height: 100vh;                
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
-#title
-{
+
+#title {
     font-size: 5rem;
     text-align: center;
-    color: rgb(199, 248, 255);
-    font-family: serif;
+    color: rgb(176, 255, 255);
+    font-family: 'Serif', serif;
     font-weight: bold;
+    margin-bottom: 20px;
 }
-#buttonStart
-{
-    text-align: center;
-    
+
+#subtitle {
+    font-size: 2rem;
+    color: rgba(176, 255, 255, 0.8);
+    font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
+
+#buttonStart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttonStart button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: hwb(178 81% 0%);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Arial', sans-serif;
+}
+
+#buttonStart button:hover {
+    background-color: #660000;
+    transform: scale(1.05);
+    color: white;
+}
+
+#buttonStart button:active {
+    background-color: #000000;
+    transform: scale(1);
+}
+
+#buttonStart button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.337);
+}
+
