@@ -1,0 +1,53 @@
+body {
+    background: black;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://c.tenor.com/27mSeF5fDXEAAAAd/tenor.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cella {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+p {
+    font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
+#button button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: hwb(178 62% 17%);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Arial', sans-serif;
+}
+
+#button button:hover {
+    background-color: #660000;
+    transform: scale(1.05);
+    color: white;
+}
+
+#button button:active {
+    background-color: #000000;
+    transform: scale(1);
+}
+
+#button button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.337);
+}
