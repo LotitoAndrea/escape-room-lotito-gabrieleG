@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over - Sei Stato Catturato!</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ffcc00;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #dc3545;
+            text-align: center;
+        }
+
+        .skeleton {
+            width: 250px;
+            margin-top: 50px;  /* Aumentato il margine superiore per separare l'immagine dal testo */
+            margin-bottom: 30px; /* Aggiunto margine inferiore */
+            margin-left: 10px;  /* Aggiunto margine sinistro per spostare un po' l'immagine a destra */
+            margin-right: 10px; /* Aggiunto margine destro per spostare un po' l'immagine a sinistra */
+            animation: shake 5s infinite;
+        }
+
+        @keyframes shake {       
+            0% { transform: translateX(100px); }
+            25% { transform: translateX(-100px); }
+            50% { transform: translateX(100px); }
+            75% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Game Over</h1>
+    <div class="message">
+        <p>Hai sbagliato la risposta! L'allarme si è riattivato e sei stato catturato dal sistema di sicurezza!</p>
+        <p>Sei ora uno <strong>scheletro</strong>!</p>
+    </div>
+    <img src="https://media.tenor.com/_F3sVZV2dZwAAAAj/skull.gif" class="skeleton" alt="Scheletro">
+</body>
+</html>
