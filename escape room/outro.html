@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fuga Finale</title>
     <style>
-        
         body {
             margin: 0;
             padding: 0;
@@ -76,17 +75,28 @@
                 transform: rotate(360deg);
             }
         }
+
+        .victory-message {
+            font-size: 24px;
+            color: #fff;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
     </style>
 </head>
 <body>
     <div class="content">
         <button class="btn" onclick="celebrate()">Festa!</button>
+        <div id="victoryMessage" class="victory-message">
+            <strong>Hai disattivato l'allarme e spaccato la finestra dell'entrata, adesso sei libero e puoi goderti le tue ferie meritate</strong><br>ps. mai fare straordinari l'ultimo giorno di lavoro!!!
+        </div>
     </div>
 
     <!-- Confetti Section -->
     <div class="confetti" id="confetti"></div>
 
-    <audio id="yippieSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+    <audio id="yippieSound" src="yippee-tbh.mp3" preload="auto"></audio>
 
     <script>
         // Function to generate random color
@@ -98,7 +108,8 @@
         // Function to generate confetti
         function generateConfetti() {
             let confettiContainer = document.getElementById("confetti");
-            for (let i = 0; i < 100; i++) {
+        
+            for (let i = 0; i < 10; i += 2) {
                 let confettiPiece = document.createElement("div");
                 confettiPiece.classList.add("confetti-piece");
                 confettiPiece.style.left = Math.random() * 100 + "vw";  // Random horizontal position
@@ -109,8 +120,8 @@
             }
         }
 
-        // Function to play YIPPIE sound
-        function playYippieSound() {
+        // Function to play YIPPIE sound 
+        function playYippieSound() { 
             let yippieSound = document.getElementById("yippieSound");
             yippieSound.play();
         }
@@ -120,11 +131,18 @@
             document.body.style.backgroundColor = getRandomColor();
         }
 
+        // Function to show victory message
+        function showVictoryMessage() {
+            const message = document.getElementById("victoryMessage");
+            message.style.opacity = 1;
+        }
+
         // Main function to trigger the celebration
         function celebrate() {
             generateConfetti();         // Generate confetti
             playYippieSound();          // Play YIPPIE sound
             changeBackgroundColor();    // Change background color
+            showVictoryMessage();       // Show victory message
         }
     </script>
 </body>
