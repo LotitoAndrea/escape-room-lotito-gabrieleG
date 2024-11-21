@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Over - Sei Stato Catturato!</title>
+    <title>Game Over - Sei Stato Ucciso!</title>
 
     <style>
         body {
@@ -39,6 +39,7 @@
             margin-left: 10px;  /* Aggiunto margine sinistro per spostare un po' l'immagine a destra */
             margin-right: 10px; /* Aggiunto margine destro per spostare un po' l'immagine a sinistra */
             animation: shake 5s infinite;
+            cursor: pointer;
         }
 
         @keyframes shake {       
@@ -54,9 +55,14 @@
 <body>
     <h1>Game Over</h1>
     <div class="message">
-        <p>Hai sbagliato la risposta! L'allarme si è riattivato e sei stato catturato dal sistema di sicurezza!</p>
+        <p>Hai sbagliato la risposta! L'allarme si è riattivato e sei stato eliminato dal sistema di sicurezza!</p>
         <p>Sei ora uno <strong>scheletro</strong>!</p>
     </div>
-    <img src="https://media.tenor.com/_F3sVZV2dZwAAAAj/skull.gif" class="skeleton" alt="Scheletro">
+    <img onclick="goBack()" src="https://media.tenor.com/_F3sVZV2dZwAAAAj/skull.gif" class="skeleton" alt="Scheletro">
+    <script>
+        function goBack() {
+            window.location.href = "intro.html";
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuga Finale</title>
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-4px);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10px;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 100vh;
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <button class="btn" onclick="celebrate()">Festa!</button>
+    </div>
+
+    <!-- Confetti Section -->
+    <div class="confetti" id="confetti"></div>
+
+    <audio id="yippieSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+    <script>
+        // Function to generate random color
+        function getRandomColor() {
+            const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#8a2be2', '#ff1493'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Function to generate confetti
+        function generateConfetti() {
+            let confettiContainer = document.getElementById("confetti");
+            for (let i = 0; i < 100; i++) {
+                let confettiPiece = document.createElement("div");
+                confettiPiece.classList.add("confetti-piece");
+                confettiPiece.style.left = Math.random() * 100 + "vw";  // Random horizontal position
+                confettiPiece.style.animationDuration = (Math.random() * 2 + 3) + "s";  // Random fall duration
+                confettiPiece.style.animationDelay = Math.random() * 2 + "s";  // Random delay
+                confettiPiece.style.backgroundColor = getRandomColor();  // Random color for each piece
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        // Function to play YIPPIE sound
+        function playYippieSound() {
+            let yippieSound = document.getElementById("yippieSound");
+            yippieSound.play();
+        }
+
+        // Function to change background color randomly
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = getRandomColor();
+        }
+
+        // Main function to trigger the celebration
+        function celebrate() {
+            generateConfetti();         // Generate confetti
+            playYippieSound();          // Play YIPPIE sound
+            changeBackgroundColor();    // Change background color
+        }
+    </script>
+</body>
+</html>

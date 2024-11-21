@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Database Congelato - Enigma 1</title>
-
+    <title>Quiz 3: Ricostruir la Consulta de Acceso</title>
     <style>
         body {
             margin: 0;
@@ -124,18 +123,21 @@
     <div class="overlay"></div>
 
     <div class="content">
-        <h1>Il Database Congelato</h1>
+        <h1>Il Database Congelato - Quiz 3</h1>
 
         <div class="quiz">
-            <h2>Quiz 1: Identificazione degli Accessi Sospetti</h2>
-            <p>Per scoprire chi ha attivato l'allarme il 20 dicembre, devi scrivere una query SQL corretta.</p>
-            <p><strong>Indizio:</strong> La tabella degli accessi contiene le seguenti colonne: id, utente_id, evento, ora_accesso. La tabella utenti contiene id, nome e ruolo.</p>
-            <p><strong>Domanda:</strong> Quale query SQL devi scrivere per trovare l'ora e il nome dell'utente che ha attivato l'allarme il 20 dicembre?</p>
+            <h2>Quiz 3: Ricostruire la Query di Accesso</h2>
+            <p>Il sistema di database ha diverse tabelle ed è necessario trovare gli eventi accaduti durante la giornata del 20 dicembre. Le tabelle contengono le seguenti informazioni:</p>
             <ul>
-                <li><button onclick="checkAnswer(1)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(3)">SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';</button></li>
+                <strong>La tabella <em>usuarios</em> contiene:</strong> id, nombre, rol.
+                <strong>La tabella <em>accesos</em> contiene:</strong> id, usuario_id, evento, hora_acceso.
+            </ul>
+            <p><strong>Domanda:</strong> Quale query SQL è corretta per trovare il nome e l'ora di accesso degli utenti che hanno attivato l'allarme il 20 dicembre?</p>
+            <ul>
+                <li><button onclick="checkAnswer(1)">SELECT nombre, hora_acceso FROM usuarios INNER JOIN accesos ON usuarios.id = accesos.usuario_id WHERE accesos.evento = 'Alarma Activada' AND accesos.fecha = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(2)">SELECT nombre, hora_acceso FROM usuarios LEFT JOIN accesos ON usuarios.id = accesos.usuario_id WHERE accesos.evento = 'Alarma Activada';</button></li>
+                <li><button onclick="checkAnswer(3)">SELECT nombre, hora_acceso FROM accesos WHERE evento = 'Alarma Activada' AND fecha = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(4)">SELECT nombre, hora_acceso FROM usuarios WHERE evento = 'Alarma Activada' AND fecha = '2023-12-20';</button></li>
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -153,6 +155,7 @@
                     document.getElementById('countdown').textContent = timerValue;
                 } else {
                     clearInterval(timerInterval);
+                    alert("Tempo scaduto! L'allarme è stato attivato di nuovo.");
                     window.location.href = "gameover.html";  // Redirect to game over page when time expires
                 }
             }, 1000);
@@ -162,10 +165,11 @@
             clearInterval(timerInterval);  // Stop the timer as soon as an answer is selected
 
             let resultText = "";
-            if (option === 2) {
-                resultText = "<p class='correct'>Risposta corretta! Hai identificato l'utente che ha attivato l'allarme. Ora puoi proseguire verso la prossima sfida!</p>";
+            if (option === 1) {
+                resultText = "<p class='correct'>Risposta corretta! Hai trovato la query giusta. Ora puoi proseguire alla prossima sfida!</p>";
+                // Redirect to the next quiz or page
                 setTimeout(() => {
-                    window.location.href = "pag2.html"; // Reindirizza alla pagina di successo o alla fase successiva
+                    window.location.href = "pag4.html";  // Go to the next quiz or page
                 }, 2000);
             } else {
                 resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato! Sei stato eliminato!</p>";

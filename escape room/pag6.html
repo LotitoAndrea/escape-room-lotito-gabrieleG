@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Database Congelato - Enigma 1</title>
+    <title>Quiz 6: Esplorazione degli Indizi</title>
 
     <style>
         body {
@@ -124,18 +124,15 @@
     <div class="overlay"></div>
 
     <div class="content">
-        <h1>Il Database Congelato</h1>
+        <h1>Quiz 6: Esplorazione degli Indizi</h1>
 
         <div class="quiz">
-            <h2>Quiz 1: Identificazione degli Accessi Sospetti</h2>
-            <p>Per scoprire chi ha attivato l'allarme il 20 dicembre, devi scrivere una query SQL corretta.</p>
-            <p><strong>Indizio:</strong> La tabella degli accessi contiene le seguenti colonne: id, utente_id, evento, ora_accesso. La tabella utenti contiene id, nome e ruolo.</p>
-            <p><strong>Domanda:</strong> Quale query SQL devi scrivere per trovare l'ora e il nome dell'utente che ha attivato l'allarme il 20 dicembre?</p>
+            <h2>Domanda: Cosa dovresti fare per raccogliere informazioni e indizi per risolvere il quiz sulla combinazione finale?</h2>
             <ul>
-                <li><button onclick="checkAnswer(1)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(3)">SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(1)">Esplorare l’ufficio per trovare una chiave o una password scritta manualmente.</button></li>
+                <li><button onclick="checkAnswer(2)">Usare il sistema per cercare gli accessi più strani e fare delle query per scoprire da dove provengono.</button></li>
+                <li><button onclick="checkAnswer(3)">Ignorare gli orari di accesso e concentrarsi sulla configurazione dell’allarme.</button></li>
+                <li><button onclick="checkAnswer(4)">Uscire dall'ufficio per chiamare aiuto, poiché non riesci a decifrare la combinazione.</button></li>
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -163,12 +160,13 @@
 
             let resultText = "";
             if (option === 2) {
-                resultText = "<p class='correct'>Risposta corretta! Hai identificato l'utente che ha attivato l'allarme. Ora puoi proseguire verso la prossima sfida!</p>";
+                resultText = "<p class='correct'>Risposta corretta! Hai scelto l'approccio giusto per raccogliere indizi per la combinazione finale.</p>";
+                // Proceed to next stage or load next part
                 setTimeout(() => {
-                    window.location.href = "pag2.html"; // Reindirizza alla pagina di successo o alla fase successiva
+                    window.location.href = "outro.html"; // Redirect to next page (e.g. pag7.html)
                 }, 2000);
             } else {
-                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato! Sei stato eliminato!</p>";
+                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato!</p>";
                 setTimeout(() => {
                     window.location.href = "gameover.html";  // Redirect to the game over page after a brief delay
                 }, 2000);

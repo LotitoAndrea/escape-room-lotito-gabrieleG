@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Database Congelato - Enigma 1</title>
+    <title>Quiz 5: Uso della JOIN</title>
 
     <style>
         body {
@@ -124,18 +124,15 @@
     <div class="overlay"></div>
 
     <div class="content">
-        <h1>Il Database Congelato</h1>
+        <h1>Quiz 5: Uso della JOIN</h1>
 
         <div class="quiz">
-            <h2>Quiz 1: Identificazione degli Accessi Sospetti</h2>
-            <p>Per scoprire chi ha attivato l'allarme il 20 dicembre, devi scrivere una query SQL corretta.</p>
-            <p><strong>Indizio:</strong> La tabella degli accessi contiene le seguenti colonne: id, utente_id, evento, ora_accesso. La tabella utenti contiene id, nome e ruolo.</p>
-            <p><strong>Domanda:</strong> Quale query SQL devi scrivere per trovare l'ora e il nome dell'utente che ha attivato l'allarme il 20 dicembre?</p>
+            <h2>Domanda: Qual è la query SQL corretta per trovare il nome dell'utente e l'ora di attivazione dell'allarme il 20 dicembre?</h2>
             <ul>
-                <li><button onclick="checkAnswer(1)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(3)">SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(1)">SELECT name, timestamp FROM users INNER JOIN logs ON users.id = logs.user_id WHERE logs.event = 'Alarm Activated' AND logs.timestamp = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(2)">SELECT name, timestamp FROM users LEFT JOIN logs ON users.id = logs.user_id WHERE logs.event = 'Alarm Activated';</button></li>
+                <li><button onclick="checkAnswer(3)">SELECT name, timestamp FROM logs WHERE event = 'Alarm Activated' AND timestamp = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(4)">SELECT name, timestamp FROM users WHERE event = 'Alarm Activated' AND timestamp = '2023-12-20';</button></li>
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -162,13 +159,14 @@
             clearInterval(timerInterval);  // Stop the timer as soon as an answer is selected
 
             let resultText = "";
-            if (option === 2) {
-                resultText = "<p class='correct'>Risposta corretta! Hai identificato l'utente che ha attivato l'allarme. Ora puoi proseguire verso la prossima sfida!</p>";
+            if (option === 1) {
+                resultText = "<p class='correct'>Risposta corretta! Hai trovato la query giusta per identificare l'utente che ha attivato l'allarme.</p>";
+                // Proceed to next stage or load next part
                 setTimeout(() => {
-                    window.location.href = "pag2.html"; // Reindirizza alla pagina di successo o alla fase successiva
+                    window.location.href = "pag6.html"; // Redirect to next page (e.g. pag6.html)
                 }, 2000);
             } else {
-                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato! Sei stato eliminato!</p>";
+                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato!</p>";
                 setTimeout(() => {
                     window.location.href = "gameover.html";  // Redirect to the game over page after a brief delay
                 }, 2000);

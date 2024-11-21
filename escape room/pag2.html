@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Database Congelato - Enigma 1</title>
+    <title>Secondo Enigma - Escape Room</title>
 
     <style>
         body {
@@ -124,18 +124,17 @@
     <div class="overlay"></div>
 
     <div class="content">
-        <h1>Il Database Congelato</h1>
+        <h1>Secondo Enigma - Decifrare l'Hash della Password</h1>
 
         <div class="quiz">
-            <h2>Quiz 1: Identificazione degli Accessi Sospetti</h2>
-            <p>Per scoprire chi ha attivato l'allarme il 20 dicembre, devi scrivere una query SQL corretta.</p>
-            <p><strong>Indizio:</strong> La tabella degli accessi contiene le seguenti colonne: id, utente_id, evento, ora_accesso. La tabella utenti contiene id, nome e ruolo.</p>
-            <p><strong>Domanda:</strong> Quale query SQL devi scrivere per trovare l'ora e il nome dell'utente che ha attivato l'allarme il 20 dicembre?</p>
+            <h2>Hai trovato un hash MD5 della password nel database, ma devi decifrarla per disattivare l'allarme.</h2>
+            <p><strong>Indizio:</strong> La password è cifrata con MD5 e devi trovare un modo per decodificarla.</p>
+            <p><strong>Domanda:</strong> Quali dei seguenti strumenti o funzioni possono aiutare a decifrare un hash MD5?</p>
             <ul>
-                <li><button onclick="checkAnswer(1)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(3)">SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';</button></li>
+                <li><button onclick="checkAnswer(1)">SELECT DECRYPT(md5_password) FROM utenti WHERE id = 1;</button></li>
+                <li><button onclick="checkAnswer(2)">SELECT hash_function(md5_password) FROM utenti WHERE id = 1;</button></li>
+                <li><button onclick="checkAnswer(3)">Use an external MD5 decryption tool or hash lookup table.</button></li>
+                <li><button onclick="checkAnswer(4)">SELECT password FROM utenti WHERE id = 1 AND hash_password = 'md5_hash_value';</button></li>
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -153,30 +152,32 @@
                     document.getElementById('countdown').textContent = timerValue;
                 } else {
                     clearInterval(timerInterval);
-                    window.location.href = "gameover.html";  // Redirect to game over page when time expires
+                    alert("Tempo scaduto! L'allarme è stato riattivato.");
+                    window.location.href = "gameover.html"; // Reindirizza alla pagina Game Over se il tempo scade
                 }
             }, 1000);
         }
 
         function checkAnswer(option) {
-            clearInterval(timerInterval);  // Stop the timer as soon as an answer is selected
+            clearInterval(timerInterval);  // Ferma il timer quando viene selezionata una risposta
 
             let resultText = "";
-            if (option === 2) {
-                resultText = "<p class='correct'>Risposta corretta! Hai identificato l'utente che ha attivato l'allarme. Ora puoi proseguire verso la prossima sfida!</p>";
+            if (option === 3) {
+                resultText = "<p class='correct'>Risposta corretta! Hai trovato il metodo giusto per decifrare l'hash MD5.</p>";
+                // Prosegui alla prossima pagina o fase
                 setTimeout(() => {
-                    window.location.href = "pag2.html"; // Reindirizza alla pagina di successo o alla fase successiva
+                    window.location.href = "pag3.html"; // Reindirizza alla pagina di successo o alla fase successiva
                 }, 2000);
             } else {
-                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato! Sei stato eliminato!</p>";
+                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato!</p>";
                 setTimeout(() => {
-                    window.location.href = "gameover.html";  // Redirect to the game over page after a brief delay
+                    window.location.href = "gameover.html"; // Reindirizza alla pagina Game Over se la risposta è errata
                 }, 2000);
             }
             document.getElementById("result").innerHTML = resultText;
         }
 
-        // Start the countdown timer when the page is loaded
+        // Avvia il timer quando la pagina è caricata
         startTimer();
     </script>
 </body>
