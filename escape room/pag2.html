@@ -130,11 +130,8 @@
             <h2>Hai trovato un hash MD5 della password nel database, ma devi decifrarla per disattivare l'allarme.</h2>
             <p><strong>Indizio:</strong> La password è cifrata con MD5 e devi trovare un modo per decodificarla.</p>
             <p><strong>Domanda:</strong> Quali dei seguenti strumenti o funzioni possono aiutare a decifrare un hash MD5?</p>
-            <ul>
-                <li><button onclick="checkAnswer(1)">SELECT DECRYPT(md5_password) FROM utenti WHERE id = 1;</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT hash_function(md5_password) FROM utenti WHERE id = 1;</button></li>
-                <li><button onclick="checkAnswer(3)">Use an external MD5 decryption tool or hash lookup table.</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT password FROM utenti WHERE id = 1 AND hash_password = 'md5_hash_value';</button></li>
+            <ul id="answers-list">
+                <!-- Risposte randomizzate verranno inserite qui -->
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -145,24 +142,42 @@
         let timerValue = 30;
         let timerInterval;
 
-        function startTimer() {
-            timerInterval = setInterval(function() {
-                if (timerValue > 0) {
-                    timerValue--;
-                    document.getElementById('countdown').textContent = timerValue;
-                } else {
-                    clearInterval(timerInterval);
-                    alert("Tempo scaduto! L'allarme è stato riattivato.");
-                    window.location.href = "gameover.html"; // Reindirizza alla pagina Game Over se il tempo scade
-                }
-            }, 1000);
+        // Lista delle risposte
+        const answers = [
+            { text: "SELECT DECRYPT(md5_password) FROM utenti WHERE id = 1;", correct: false },
+            { text: "SELECT hash_function(md5_password) FROM utenti WHERE id = 1;", correct: false },
+            { text: "Use an external MD5 decryption tool or hash lookup table.", correct: true },
+            { text: "SELECT password FROM utenti WHERE id = 1 AND hash_password = 'md5_hash_value';", correct: false }
+        ];
+
+        // Funzione per randomizzare l'array delle risposte
+        function shuffleAnswers() {
+            for (let i = answers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [answers[i], answers[j]] = [answers[j], answers[i]];
+            }
         }
 
-        function checkAnswer(option) {
+        // Funzione per generare la lista delle risposte
+        function generateAnswers() {
+            const answersList = document.getElementById('answers-list');
+            answersList.innerHTML = '';  // Pulisce la lista esistente
+            answers.forEach((answer, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = answer.text;
+                button.onclick = () => checkAnswer(answer.correct);
+                li.appendChild(button);
+                answersList.appendChild(li);
+            });
+        }
+
+        // Funzione per verificare la risposta
+        function checkAnswer(isCorrect) {
             clearInterval(timerInterval);  // Ferma il timer quando viene selezionata una risposta
 
             let resultText = "";
-            if (option === 3) {
+            if (isCorrect) {
                 resultText = "<p class='correct'>Risposta corretta! Hai trovato il metodo giusto per decifrare l'hash MD5.</p>";
                 // Prosegui alla prossima pagina o fase
                 setTimeout(() => {
@@ -177,7 +192,23 @@
             document.getElementById("result").innerHTML = resultText;
         }
 
-        // Avvia il timer quando la pagina è caricata
+        // Funzione per avviare il timer
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                if (timerValue > 0) {
+                    timerValue--;
+                    document.getElementById('countdown').textContent = timerValue;
+                } else {
+                    clearInterval(timerInterval);
+                    alert("Tempo scaduto! L'allarme è stato riattivato.");
+                    window.location.href = "gameover.html"; // Reindirizza alla pagina Game Over se il tempo scade
+                }
+            }, 1000);
+        }
+
+        // Avvia la randomizzazione delle risposte e il timer
+        shuffleAnswers();
+        generateAnswers();
         startTimer();
     </script>
 </body>

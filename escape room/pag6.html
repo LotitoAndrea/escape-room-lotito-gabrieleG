@@ -128,11 +128,8 @@
 
         <div class="quiz">
             <h2>Domanda: Cosa dovresti fare per raccogliere informazioni e indizi per risolvere il quiz sulla combinazione finale?</h2>
-            <ul>
-                <li><button onclick="checkAnswer(1)">Esplorare l’ufficio per trovare una chiave o una password scritta manualmente.</button></li>
-                <li><button onclick="checkAnswer(2)">Usare il sistema per cercare gli accessi più strani e fare delle query per scoprire da dove provengono.</button></li>
-                <li><button onclick="checkAnswer(3)">Ignorare gli orari di accesso e concentrarsi sulla configurazione dell’allarme.</button></li>
-                <li><button onclick="checkAnswer(4)">Uscire dall'ufficio per chiamare aiuto, poiché non riesci a decifrare la combinazione.</button></li>
+            <ul id="answers-list">
+                <!-- Le risposte randomizzate verranno aggiunte qui -->
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -143,6 +140,57 @@
         let timerValue = 30;
         let timerInterval;
 
+        // Lista delle risposte
+        const answers = [
+            { text: "Esplorare l’ufficio per trovare una chiave o una password scritta manualmente.", correct: false },
+            { text: "Usare il sistema per cercare gli accessi più strani e fare delle query per scoprire da dove provengono.", correct: true },
+            { text: "Ignorare gli orari di accesso e concentrarsi sulla configurazione dell’allarme.", correct: false },
+            { text: "Uscire dall'ufficio per chiamare aiuto, poiché non riesci a decifrare la combinazione.", correct: false }
+        ];
+
+        // Funzione per randomizzare le risposte
+        function shuffleAnswers() {
+            for (let i = answers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [answers[i], answers[j]] = [answers[j], answers[i]];  // Scambio degli elementi
+            }
+        }
+
+        // Funzione per generare la lista delle risposte
+        function generateAnswers() {
+            const answersList = document.getElementById('answers-list');
+            answersList.innerHTML = '';  // Pulisce la lista esistente
+            answers.forEach((answer) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = answer.text;
+                button.onclick = () => checkAnswer(answer.correct);
+                li.appendChild(button);
+                answersList.appendChild(li);
+            });
+        }
+
+        // Funzione per verificare la risposta
+        function checkAnswer(isCorrect) {
+            clearInterval(timerInterval);  // Ferma il timer quando viene selezionata una risposta
+
+            let resultText = "";
+            if (isCorrect) {
+                resultText = "<p class='correct'>Risposta corretta! Hai scelto l'approccio giusto per raccogliere indizi per la combinazione finale.</p>";
+                // Reindirizza alla prossima pagina
+                setTimeout(() => {
+                    window.location.href = "outro.html";  // Vai alla prossima pagina
+                }, 2000);
+            } else {
+                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato!</p>";
+                setTimeout(() => {
+                    window.location.href = "gameover.html";  // Vai alla pagina di game over
+                }, 2000);
+            }
+            document.getElementById("result").innerHTML = resultText;
+        }
+
+        // Funzione per avviare il timer
         function startTimer() {
             timerInterval = setInterval(function() {
                 if (timerValue > 0) {
@@ -150,31 +198,14 @@
                     document.getElementById('countdown').textContent = timerValue;
                 } else {
                     clearInterval(timerInterval);
-                    window.location.href = "gameover.html";  // Redirect to game over page when time expires
+                    window.location.href = "gameover.html";  // Vai alla pagina di game over quando il tempo scade
                 }
             }, 1000);
         }
 
-        function checkAnswer(option) {
-            clearInterval(timerInterval);  // Stop the timer as soon as an answer is selected
-
-            let resultText = "";
-            if (option === 2) {
-                resultText = "<p class='correct'>Risposta corretta! Hai scelto l'approccio giusto per raccogliere indizi per la combinazione finale.</p>";
-                // Proceed to next stage or load next part
-                setTimeout(() => {
-                    window.location.href = "outro.html"; // Redirect to next page (e.g. pag7.html)
-                }, 2000);
-            } else {
-                resultText = "<p class='incorrect'>Risposta errata. L'allarme è stato riattivato!</p>";
-                setTimeout(() => {
-                    window.location.href = "gameover.html";  // Redirect to the game over page after a brief delay
-                }, 2000);
-            }
-            document.getElementById("result").innerHTML = resultText;
-        }
-
-        // Start the countdown timer when the page is loaded
+        // Avvia la randomizzazione delle risposte e il timer
+        shuffleAnswers();
+        generateAnswers();
         startTimer();
     </script>
 </body>

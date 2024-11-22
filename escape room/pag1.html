@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Database Congelato - Enigma 1</title>
+    <title>Prima Enigma - Escape Room</title>
 
     <style>
         body {
@@ -131,11 +131,8 @@
             <p>Per scoprire chi ha attivato l'allarme il 20 dicembre, devi scrivere una query SQL corretta.</p>
             <p><strong>Indizio:</strong> La tabella degli accessi contiene le seguenti colonne: id, utente_id, evento, ora_accesso. La tabella utenti contiene id, nome e ruolo.</p>
             <p><strong>Domanda:</strong> Quale query SQL devi scrivere per trovare l'ora e il nome dell'utente che ha attivato l'allarme il 20 dicembre?</p>
-            <ul>
-                <li><button onclick="checkAnswer(1)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(2)">SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(3)">SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';</button></li>
-                <li><button onclick="checkAnswer(4)">SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';</button></li>
+            <ul id="questions-list">
+                <!-- Le domande randomizzate verranno caricate qui -->
             </ul>
             <div id="result" class="feedback"></div>
             <div id="timer" class="timer">Tempo rimanente: <span id="countdown">30</span>s</div>
@@ -145,6 +142,48 @@
     <script>
         let timerValue = 30;
         let timerInterval;
+
+        const questions = [
+            {
+                text: "SELECT nome, ora_accesso FROM accessi WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';",
+                correct: false
+            },
+            {
+                text: "SELECT nome, ora_accesso FROM utenti INNER JOIN accessi ON utenti.id = accessi.utente_id WHERE accessi.evento = 'Allarme Attivato' AND accessi.data = '2023-12-20';",
+                correct: true
+            },
+            {
+                text: "SELECT nome, ora_accesso FROM utenti WHERE evento = 'Allarme Attivato' AND data = '2023-12-20';",
+                correct: false
+            },
+            {
+                text: "SELECT nome, ora_accesso FROM accessi WHERE evento = 'Accesso' AND data = '2023-12-20';",
+                correct: false
+            }
+        ];
+
+        // Funzione per randomizzare le domande
+        function shuffleQuestions() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]]; // Scambio degli elementi
+            }
+        }
+
+        // Caricare le domande randomizzate nella pagina
+        function loadQuestions() {
+            shuffleQuestions(); // Randomizzare le domande
+            const listElement = document.getElementById('questions-list');
+            listElement.innerHTML = ''; // Svuotare prima le domande esistenti
+            questions.forEach((question, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = question.text;
+                button.onclick = function() { checkAnswer(question.correct); };
+                li.appendChild(button);
+                listElement.appendChild(li);
+            });
+        }
 
         function startTimer() {
             timerInterval = setInterval(function() {
@@ -158,11 +197,11 @@
             }, 1000);
         }
 
-        function checkAnswer(option) {
+        function checkAnswer(isCorrect) {
             clearInterval(timerInterval);  // Stop the timer as soon as an answer is selected
 
             let resultText = "";
-            if (option === 2) {
+            if (isCorrect) {
                 resultText = "<p class='correct'>Risposta corretta! Hai identificato l'utente che ha attivato l'allarme. Ora puoi proseguire verso la prossima sfida!</p>";
                 setTimeout(() => {
                     window.location.href = "pag2.html"; // Reindirizza alla pagina di successo o alla fase successiva
@@ -176,8 +215,9 @@
             document.getElementById("result").innerHTML = resultText;
         }
 
-        // Start the countdown timer when the page is loaded
-        startTimer();
+        // Inizializzare il quiz
+        loadQuestions(); // Carica le domande randomizzate
+        startTimer();    // Start the countdown timer when the page is loaded
     </script>
 </body>
 </html>
